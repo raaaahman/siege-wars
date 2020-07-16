@@ -7,6 +7,7 @@ Made with [Phaser 3](https://www.phaser.io/phaser3).
 # Credits
 
 - [Medievial Strategy Sprite pack v1.0 by Toen](https://opengameart.org/content/toens-medieval-strategy-sprite-pack-v10-16x16) (https://opengameart.org - [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/))
+- [SuperPowers Assets - Bitmap fonts](https://opengameart.org/content/superpowers-assets-bitmap-fonts) ([CC0](http://creativecommons.org/publicdomain/zero/1.0/))
 
 # License
 
