@@ -8,23 +8,32 @@ class GameScene extends Phaser.Scene {
 
     preload() {
         this.load.spritesheet('tileset', tilesetImg, {frameWidth: 16, frameHeight: 16})
-        // this.textures.create('tileset', tilesetImg, 16, 16)
     }
 
     create() {
-        const GRID_WIDTH = 15
-        const GRID_HEIGHT = 10
+        const battlemap = {
+            terrain: `
+            2,3,2,3,2,3,2,3,2,3,2,3,2,3,2
+            3,2,3,2,3,2,3,2,3,2,3,2,3,2,3
+            2,3,2,3,2,3,2,3,2,3,2,3,2,3,2
+            3,2,3,2,3,2,3,2,3,2,3,2,3,2,3
+            2,3,2,3,2,3,2,3,2,3,2,3,2,3,2
+            3,2,3,2,3,2,3,2,3,2,3,2,3,2,3
+            2,3,2,3,2,3,2,3,2,3,2,3,2,3,2
+            3,2,3,2,3,2,3,2,3,2,3,2,3,2,3
+            2,3,2,3,2,3,2,3,2,3,2,3,2,3,2
+            3,2,3,2,3,2,3,2,3,2,3,2,3,2,3`
+        }
 
-        for(let j = 0; j < GRID_HEIGHT; j++) {
-            for(let i = 0; i < GRID_WIDTH; i++) {
-                let frameNb = j % 2 === 0 ?
-                    ( i % 2 === 0 ? 2 : 3 ) :
-                    ( i % 2 === 0 ? 3 : 2 )
-                let tile = this.add.image(i * 16, j * 16, 'tileset', frameNb)
+        let rows = battlemap.terrain.trim().split("\n").map((row) => row.trim().split(','))
+        for (let j = 0; j < rows.length; j++) {
+            for (let i = 0; i < rows[j].length; i++) {
+                let tile = this.add.image(i * 16, j * 16, 'tileset', rows[j][i])
                 tile.setOrigin(0)
             }
         }
     }
+
 
 
     upload() {
