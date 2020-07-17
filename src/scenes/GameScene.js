@@ -1,15 +1,18 @@
 import Phaser from "phaser"
 import unitTable from '../data/units.json'
 import tilesetImg from "../assets/Tile-set - Toen's Medieval Strategy (16x16) - v.1.0.png"
-import {UnitFactory} from "../objects/Unit";
+import {UnitFactory} from "../objects/Unit"
+import CSVParser from '../helpers/CSVParser'
 
 class GameScene extends Phaser.Scene {
     constructor() {
         super('GameScene')
+        this.gridWidth = 16
+        this.gridHeight = 16
     }
 
     preload() {
-        this.load.spritesheet('tileset', tilesetImg, {frameWidth: 16, frameHeight: 16})
+        this.load.spritesheet('tileset', tilesetImg, {frameWidth: this.gridWidth, frameHeight: this.gridHeight})
     }
 
     create() {
@@ -51,32 +54,16 @@ class GameScene extends Phaser.Scene {
             ]
         }
 
-        let rows = battlemap.terrain.trim().split("\n").map((row) => row.trim().split(','))
-        for (let j = 0; j < rows.length; j++) {
-            for (let i = 0; i < rows[j].length; i++) {
-                let tile = this.add.image(i * 16, j * 16, 'tileset', rows[j][i])
-                tile.setOrigin(0)
-            }
-        }
+        const tilemap = CSVParser.fromString(battlemap.terrain).map((value, position) => {
+            let tile = this.add.image(position.x * 16, position.y * 16, 'tileset', value)
+            tile.setOrigin(0)
+            return tile
+        })
 
-        const unitFactory = new UnitFactory(unitTable, this)
+        const redUnits = new UnitFactory(unitTable, this).forPlayer({color: 'red'}).fromCSV(battlemap.units[0])
 
-        let redUnits = battlemap.units[0].trim().split("\n").map((row) => row.trim().split(','))
-        for (let j = 0; j < redUnits.length; j++) {
-            for (let i = 0; i < redUnits[j].length; i++) {
-                unitFactory.create('red', redUnits[j][i],{x: i * 16, y: j * 16})
-            }
-        }
-
-        let blueUnits = battlemap.units[1].trim().split("\n").map((row) => row.trim().split(','))
-        for (let j = 0; j < blueUnits.length; j++) {
-            for (let i = 0; i < blueUnits[j].length; i++) {
-                unitFactory.create('blue', blueUnits[j][i], {x: i * 16, y: j * 16})
-            }
-        }
+        const blueUnits = new UnitFactory(unitTable, this).forPlayer({color: 'blue'}).fromCSV(battlemap.units[1])
     }
-
-
 
     upload() {
 

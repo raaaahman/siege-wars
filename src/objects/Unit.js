@@ -1,13 +1,25 @@
+import CSVParser from "../helpers/CSVParser";
+
 class UnitFactory {
     constructor(unitTable, scene) {
         this.unitTable = unitTable
         this.scene = scene
+        return this
     }
 
-    create (player, type, position) {
-        if (this.unitTable.hasOwnProperty(type)) {
-            let unit = new Unit(player, this.unitTable[type])
-            let sprite = this.scene.add.sprite(position.x, position.y, 'tileset', unit.img)
+    forPlayer(player) {
+        this.player = player
+        return this
+    }
+
+    fromCSV(csv) {
+        CSVParser.fromString(csv).map(this.create.bind(this))
+    }
+
+    create (unitType, position) {
+        if (this.unitTable.hasOwnProperty(unitType)) {
+            let unit = new Unit(this.player.color, this.unitTable[unitType])
+            let sprite = this.scene.add.sprite(position.x * this.scene.gridWidth, position.y * this.scene.gridHeight, 'tileset', unit.img)
             sprite.setOrigin(0)
             return sprite
         }
