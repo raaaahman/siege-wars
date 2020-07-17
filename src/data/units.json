@@ -1,0 +1,38 @@
+{
+  "KNT" : {
+    "name" : "Knight",
+    "img"  : {
+      "blue"   : 115,
+      "red"    : 122,
+      "yellow" : 129,
+      "green"  : 136
+    }
+  },
+  "SWD" : {
+    "name" : "Swordsman",
+    "img"  : {
+      "blue"   : 114,
+      "red"    : 121,
+      "yellow" : 128,
+      "green"  : 136
+    }
+  },
+  "SPR" : {
+    "name" : "Spearman",
+    "img"  : {
+      "blue"   : 113,
+      "red"    : 120,
+      "yellow" : 127,
+      "green"  : 135
+    }
+  },
+  "ARC" : {
+    "name" : "Archer",
+    "img"  : {
+      "blue"   : 112,
+      "red"    : 119,
+      "yellow" : 126,
+      "green"  : 134
+    }
+  }
+}
