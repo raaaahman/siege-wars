@@ -2,7 +2,7 @@ import Phaser from "phaser"
 import unitTable from '../data/units.json'
 import tilesetImg from "../assets/Tile-set - Toen's Medieval Strategy (16x16) - v.1.0.png"
 import {UnitFactory} from "../objects/Unit"
-import CSVParser from '../helpers/CSVParser'
+import BattleMap from "../objects/BattleMap";
 
 class GameScene extends Phaser.Scene {
     constructor() {
@@ -16,7 +16,7 @@ class GameScene extends Phaser.Scene {
     }
 
     create() {
-        const battlemap = {
+        const layers = {
             terrain: `
             2,3,2,3,2,3,2,3,2,3,2,3,2,3,2
             3,2,3,2,3,2,3,2,3,2,3,2,3,2,3
@@ -54,15 +54,11 @@ class GameScene extends Phaser.Scene {
             ]
         }
 
-        const tilemap = CSVParser.fromString(battlemap.terrain).map((value, position) => {
-            let tile = this.add.image(position.x * 16, position.y * 16, 'tileset', value)
-            tile.setOrigin(0)
-            return tile
-        })
+        const battleMap = new BattleMap(layers, this)
 
-        const redUnits = new UnitFactory(unitTable, this).forPlayer({color: 'red'}).fromCSV(battlemap.units[0])
+        const redUnits = new UnitFactory(unitTable, this).forPlayer({color: 'red'}).fromCSV(layers.units[0])
 
-        const blueUnits = new UnitFactory(unitTable, this).forPlayer({color: 'blue'}).fromCSV(battlemap.units[1])
+        const blueUnits = new UnitFactory(unitTable, this).forPlayer({color: 'blue'}).fromCSV(layers.units[1])
     }
 
     upload() {
