@@ -19,7 +19,7 @@ class UnitFactory {
     create (unitType, position) {
         if (this.unitTable.hasOwnProperty(unitType)) {
             let unit = new Unit(this.player.color, this.unitTable[unitType])
-            let sprite = this.scene.add.sprite(position.x * this.scene.gridWidth, position.y * this.scene.gridHeight, 'tileset', unit.img)
+            let sprite = this.scene.add.sprite(position.x * this.scene.tileWidth, position.y * this.scene.tileHeight, 'tileset', unit.img)
             sprite.setOrigin(0)
             return sprite
         }

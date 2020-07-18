@@ -5,14 +5,23 @@ class CSVParser {
 
     constructor(string) {
         this.string = string
+        this.rows = this.string.trim().split("\n").map((row) => row.trim().split(','))
+    }
+
+
+    get numRows() {
+        return this.rows.length
+    }
+
+    get maxColumns() {
+        return this.rows.reduce((longestRow, currentRow) => longestRow > currentRow.length ? longestRow : currentRow.length)
     }
 
     map(callback) {
         let returnValue = []
-        let lines = this.string.trim().split("\n").map((row) => row.trim().split(','))
-        for (let j = 0; j < lines.length; j++) {
-            for (let i = 0; i < lines[j].length; i++) {
-               returnValue.push(callback(lines[j][i], {x: i, y: j}))
+        for (let j = 0; j < this.rows.length; j++) {
+            for (let i = 0; i < this.rows[j].length; i++) {
+               returnValue.push(callback(this.rows[j][i], {x: i, y: j}))
             }
         }
         return returnValue
