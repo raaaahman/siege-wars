@@ -54,15 +54,32 @@ class GameScene extends Phaser.Scene {
             ]
         }
 
-        const battleMap = new BattleMap(layers, this)
+        this.battleMap = new BattleMap(layers, this)
 
-        const redUnits = new UnitFactory(unitTable, this).forPlayer({color: 'red'}).fromCSV(layers.units[0])
+        let units = new UnitFactory(unitTable, this).forPlayer({color: 'red'}).fromCSV(layers.units[0])
+        units = units.concat(new UnitFactory(unitTable, this).forPlayer({color: 'blue'}).fromCSV(layers.units[1]))
 
-        const blueUnits = new UnitFactory(unitTable, this).forPlayer({color: 'blue'}).fromCSV(layers.units[1])
+        this.cursor = this.add.image(
+            this.input.activePointer.position.x - (this.input.activePointer.position.x % this.tileWidth),
+            this.input.activePointer.position.y - (this.input.activePointer.position.y % this.tileHeight),
+            'tileset',
+            297
+        )
+        this.cursor.setOrigin(0)
+
+        this.input.on('pointermove', () => {
+            if (!this.battleMap.isOutOfBounds(this.input.activePointer.position)) {
+                this.cursor.setPosition(
+                    this.input.activePointer.position.x - (this.input.activePointer.position.x % this.tileWidth),
+                    this.input.activePointer.position.y - (this.input.activePointer.position.y % this.tileHeight)
+                )
+            }
+
+        })
     }
 
     upload() {
-
+        // this.unit.find((unit) => unit.position.equals(postion))
     }
 }
 

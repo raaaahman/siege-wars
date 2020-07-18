@@ -13,7 +13,7 @@ class UnitFactory {
     }
 
     fromCSV(csv) {
-        CSVParser.fromString(csv).map(this.create.bind(this))
+        return CSVParser.fromString(csv).map(this.create.bind(this))
     }
 
     create (unitType, position) {
