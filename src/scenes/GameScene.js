@@ -57,7 +57,7 @@ class GameScene extends Phaser.Scene {
         this.battleMap = new BattleMap(layers, this)
 
         let units = new UnitFactory(unitTable, this).forPlayer({color: 'red'}).fromCSV(layers.units[0])
-        units = units.concat(new UnitFactory(unitTable, this).forPlayer({color: 'blue'}).fromCSV(layers.units[1]))
+        this.units = units.concat(new UnitFactory(unitTable, this).forPlayer({color: 'blue'}).fromCSV(layers.units[1]))
 
         this.cursor = this.add.image(
             this.input.activePointer.position.x - (this.input.activePointer.position.x % this.tileWidth),
@@ -67,19 +67,51 @@ class GameScene extends Phaser.Scene {
         )
         this.cursor.setOrigin(0)
 
+        this.infoText = {
+            unitName: this.add.text(180, 4, '', {font: '10px monospace'}),
+            unitPlayer: this.add.text(180, 16, '', {font: '10px monospace'})
+        }
+
         this.input.on('pointermove', () => {
             if (!this.battleMap.isOutOfBounds(this.input.activePointer.position)) {
+                let pointerX = this.input.activePointer.position.x - (this.input.activePointer.position.x % this.tileWidth);
+                let pointerY = this.input.activePointer.position.y - (this.input.activePointer.position.y % this.tileHeight);
                 this.cursor.setPosition(
-                    this.input.activePointer.position.x - (this.input.activePointer.position.x % this.tileWidth),
-                    this.input.activePointer.position.y - (this.input.activePointer.position.y % this.tileHeight)
+                    pointerX,
+                    pointerY
                 )
+
+                let hoveredUnit = this.units.find((unit) =>
+                    unit.sprite.x - (unit.sprite.x % this.tileWidth) === pointerX &&
+                    unit.sprite.y - (unit.sprite.y % this.tileHeight) === pointerY
+                )
+
+                /*
+                let guiDimensions = {
+                    x: 176,
+                    y: 0,
+                    width: 48,
+                    height: 160
+                }
+                */
+
+                if (hoveredUnit) {
+                    this.infoText.unitName.setText(hoveredUnit.name)
+                    this.infoText.unitPlayer.setText(hoveredUnit.player.color)
+                } else {
+                    this.infoText.unitName.setText('')
+                    this.infoText.unitPlayer.setText('')
+                }
+
+
+
             }
 
         })
     }
 
-    upload() {
-        // this.unit.find((unit) => unit.position.equals(postion))
+    update(time, delta) {
+
     }
 }
 
