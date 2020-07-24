@@ -3,6 +3,14 @@ class GameState {
         this.activePlayer = previousState.activePlayer
         this.scene = scene
     }
+
+    pointerMove() {
+
+    }
+
+    pointerDown() {
+        
+    }
 }
 
 export default GameState

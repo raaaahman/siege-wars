@@ -1,4 +1,6 @@
 import GameState from "../objects/GameState"
+import MoveState from "../objects/MoveState"
+import MenuState from "../objects/MenuState"
 
 class SelectState extends GameState {
     pointerMove(position) {
@@ -29,10 +31,15 @@ class SelectState extends GameState {
     }
 
     pointerDown(position) {
-        if (!this.battleMap.isOutOfBounds(position)) {
-            let tile = this.battleMap.getTileAt(position)
+        if (!this.scene.battleMap.isOutOfBounds(position)) {
+            let tile = this.scene.battleMap.getTileAt(position)
             let hoveredUnit = tile.getUnit()
 
+            if (hoveredUnit && hoveredUnit.player === this.activePlayer) {
+                this.scene.state = new MoveState(Object.assign(this, {selectedUnit: hoveredUnit}), this.scene)
+            } else {
+                this.scene.state = new MenuState(this, this.scene)
+            }
         }
     }
 }
