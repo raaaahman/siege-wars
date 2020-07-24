@@ -55,19 +55,18 @@ class GameScene extends Phaser.Scene {
             ]
         }
 
-        this.battleMap.load(layers)
+        const players= [
+            {color: 'red'},
+            {color: 'blue'}
+        ]
 
-        let player1 = {color: 'red'};
-        let player2 = {color: 'blue'};
-
-        let units = new UnitFactory(unitTable, this).forPlayer(player1).fromCSV(layers.units[0])
-        this.units = units.concat(new UnitFactory(unitTable, this).forPlayer(player2).fromCSV(layers.units[1]))
+        this.battleMap.load(layers, players)
 
         this.infoText = {
             unitName: this.add.text(180, 4, '', {font: '10px monospace'}),
             unitPlayer: this.add.text(180, 16, '', {font: '10px monospace'})
         }
-        this.state = { activePlayer: player1 }
+        this.state = { activePlayer: players[0] }
 
         let cursorImages = { red: 297, blue: 298, green: 299, yellow: 300}
         this.cursor = this.add.image(
@@ -81,7 +80,7 @@ class GameScene extends Phaser.Scene {
         this.input.on('pointermove', () => {
             if (!this.battleMap.isOutOfBounds(this.input.activePointer.position)) {
                 let tile = this.battleMap.getTileAt(this.input.activePointer.position);
-                let hoveredUnit = this.getUnitAt(tile.x, tile.y);
+                let hoveredUnit = tile.getUnit();
 
                 /*
                 let guiDimensions = {
@@ -100,7 +99,7 @@ class GameScene extends Phaser.Scene {
                     this.infoText.unitPlayer.setText('')
                 }
 
-                this.cursor.setPosition(tile.x,tile.y)
+                this.cursor.setPosition(tile.x * this.tileWidth,tile.y * this.tileHeight)
 
             }
 
@@ -111,14 +110,6 @@ class GameScene extends Phaser.Scene {
 
             }
         })
-    }
-
-    getUnitAt(pointerX, pointerY) {
-        let hoveredUnit = this.units.find((unit) =>
-            unit.sprite.x - (unit.sprite.x % this.tileWidth) === pointerX &&
-            unit.sprite.y - (unit.sprite.y % this.tileHeight) === pointerY
-        )
-        return hoveredUnit;
     }
 
     update(time, delta) {

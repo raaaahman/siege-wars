@@ -18,17 +18,18 @@ class UnitFactory {
 
     create (unitType, position) {
         if (this.unitTable.hasOwnProperty(unitType)) {
-            let unitStats = this.unitTable[unitType];
-            let unitSprite = this.scene.add.sprite(position.x * this.scene.tileWidth, position.y * this.scene.tileHeight, 'tileset', unitStats.img[this.player.color])
+            let unitStats    = this.unitTable[unitType];
+            let unitSprite   = this.scene.add.sprite(position.x * this.scene.tileWidth, position.y * this.scene.tileHeight, 'tileset', unitStats.img[this.player.color])
             unitSprite.setOrigin(0)
-            return new Unit(this.player, unitStats, unitSprite)
+            return new Unit(this.player, position, unitStats, unitSprite)
         }
     }
 }
 
 class Unit {
-    constructor(player, stats, sprite) {
+    constructor(player, position, stats, sprite) {
         this.player = player
+        this.position = new Phaser.Math.Vector2(position.x, position.y)
         this.name = stats.name
         this.sprite = sprite
     }
