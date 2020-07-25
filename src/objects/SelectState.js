@@ -5,7 +5,7 @@ import MenuState from "../objects/MenuState"
 class SelectState extends GameState {
     pointerMove(position) {
         if (!this.scene.battleMap.isOutOfBounds(position)) {
-            let tile = this.scene.battleMap.getTileAt(position);
+            let tile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position));
             let hoveredUnit = tile.getUnit();
 
             /*
@@ -32,7 +32,7 @@ class SelectState extends GameState {
 
     pointerDown(position) {
         if (!this.scene.battleMap.isOutOfBounds(position)) {
-            let tile = this.scene.battleMap.getTileAt(position)
+            let tile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position))
             let hoveredUnit = tile.getUnit()
 
             if (hoveredUnit && hoveredUnit.player === this.activePlayer) {

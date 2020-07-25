@@ -31,6 +31,7 @@ class Unit {
         this.player = player
         this.position = new Phaser.Math.Vector2(position.x, position.y)
         this.name = stats.name
+        this.move = stats.move
         this.sprite = sprite
     }
 }

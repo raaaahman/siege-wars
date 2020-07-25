@@ -6,7 +6,8 @@
       "red"    : 122,
       "yellow" : 129,
       "green"  : 136
-    }
+    },
+    "move" : 5
   },
   "SWD" : {
     "name" : "Swordsman",
@@ -15,7 +16,8 @@
       "red"    : 121,
       "yellow" : 128,
       "green"  : 136
-    }
+    },
+    "move" : 2
   },
   "SPR" : {
     "name" : "Spearman",
@@ -24,7 +26,8 @@
       "red"    : 120,
       "yellow" : 127,
       "green"  : 135
-    }
+    },
+    "move" : 3
   },
   "ARC" : {
     "name" : "Archer",
@@ -33,6 +36,7 @@
       "red"    : 119,
       "yellow" : 126,
       "green"  : 134
-    }
+    },
+    "move" : 3
   }
 }

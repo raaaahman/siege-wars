@@ -34,10 +34,26 @@ class BattleMap {
             position.y >= this.gridHeight * this.tileHeight
     }
 
-    getTileAt(position) {
+    getTileAt(coordinates) {
+        return this.terrain[coordinates.y * this.gridWidth + coordinates.x];
+    }
+
+    computeCoordinates(position) {
         let tileX = Math.floor(position.x / 16);
         let tileY = Math.floor(position.y / 16);
-        return this.terrain[tileY * this.gridWidth + tileX];
+        return new Phaser.Math.Vector2(tileX, tileY);
+    }
+
+    getNeighboringTiles(tile) {
+        return [
+            new Phaser.Math.Vector2().copy(tile.position).add(Phaser.Math.Vector2.DOWN),
+            new Phaser.Math.Vector2().copy(tile.position).add(Phaser.Math.Vector2.UP),
+            new Phaser.Math.Vector2().copy(tile.position).add(Phaser.Math.Vector2.RIGHT),
+            new Phaser.Math.Vector2().copy(tile.position).add(Phaser.Math.Vector2.LEFT)
+        ].filter(coordinates => {
+            return coordinates.x >= 0 && coordinates.x < this.gridWidth &&
+            coordinates.y >= 0 && coordinates.y < this.gridHeight
+        }).map(coordinates => this.terrain[coordinates.y * this.gridWidth + coordinates.x])
     }
 
     placeUnit(unit) {
