@@ -80,12 +80,11 @@ class BattleMap {
             let overlayTile = this.scene.add.image(
                 tile.position.x * this.tileWidth,
                 tile.position.y * this.tileHeight,
-                'tileset',
+                'shadedGrid',
                 0
             )
                 .setOrigin(0)
                 .setDepth(10)
-                .setAlpha(0.5)
             overlayTile.tint = args.tint
             return overlayTile
         });

@@ -33,7 +33,9 @@ class MoveState extends GameState {
                 this.selectedUnit.sprite.setPosition(targettedTile.x * this.scene.battleMap.tileWidth, targettedTile.y * this.scene.battleMap.tileHeight)
                 this.selectedUnit.sprite.tint = 0xabacab
 
-               if (this.scene.battleMap.getPlayersUnits(this.activePlayer).reduce(
+                if (this.scene.battleMap.getNeighboringTiles(targettedTile).filter(tile => tile.hasUnit() && tile.getUnit().player !== this.activePlayer).length > 0) {
+                    this.scene.state = new AttackState(Object.assign(this, {startPosition: targettedTile}), this.scene)
+                } else if (this.scene.battleMap.getPlayersUnits(this.activePlayer).reduce(
                     (canPlay, unit) => !unit.hasMoved || canPlay,
                     false)
                 ) {

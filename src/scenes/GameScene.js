@@ -1,5 +1,6 @@
 import Phaser from "phaser"
 import tilesetImg from "../assets/Tile-set - Toen's Medieval Strategy (16x16) - v.1.0.png"
+import shadedGrid from "../assets/shaded-grid-light.png"
 import BattleMap from "../objects/BattleMap"
 import SelectState from "../objects/SelectState"
 
@@ -13,6 +14,7 @@ class GameScene extends Phaser.Scene {
 
     preload() {
         this.load.spritesheet('tileset', tilesetImg, {frameWidth: this.tileWidth, frameHeight: this.tileHeight})
+        this.load.spritesheet('shadedGrid', shadedGrid, {frameWidth: this.tileWidth, frameHeight: this.tileHeight})
     }
 
     create() {
