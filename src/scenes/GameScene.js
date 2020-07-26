@@ -64,9 +64,10 @@ class GameScene extends Phaser.Scene {
         this.battleMap.load(layers, this.players)
 
         this.infoText = {
-            unitName: this.add.text(180, 4, '', {font: '10px monospace'}),
+            unitName  : this.add.text(180, 4, '', {font: '10px monospace'}),
             unitPlayer: this.add.text(180, 16, '', {font: '10px monospace'}),
-            unitDamage: this.add.text( 180, 28, '', {font: '10px monospace'})
+            unitHp    : this.add.text(180, 28, '', {font: '10px monospace'}),
+            unitDamage: this.add.text(180, 40, '', {font: '10px monospace'})
         }
         let cursor = this.add.image(
             this.input.activePointer.position.x - (this.input.activePointer.position.x % this.tileWidth),

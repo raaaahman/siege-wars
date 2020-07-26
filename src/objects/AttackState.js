@@ -25,11 +25,13 @@ class AttackState extends GameState {
             this.cursor.setFrame(173)
             this.scene.infoText.unitName.setText(targettedTile.getUnit().name)
             this.scene.infoText.unitPlayer.setText(targettedTile.getUnit().player.color)
-            this.scene.infoText.unitDamage.setText('Dmg: ' + this.startPosition.getUnit().computeDamage(targettedTile.getUnit()) + ' %')
+            this.scene.infoText.unitHp.setText('Hp: ' + targettedTile.getUnit().hp)
+            this.scene.infoText.unitDamage.setText('Dmg: ' + this.startPosition.getUnit().computeDamageRate(targettedTile.getUnit()) + ' %')
         } else {
             this.cursor.setFrame(207)
             this.scene.infoText.unitName.setText('')
             this.scene.infoText.unitPlayer.setText('')
+            this.scene.infoText.unitHp.setText('')
             this.scene.infoText.unitDamage.setText('')
         }
     }
@@ -38,12 +40,19 @@ class AttackState extends GameState {
         let targettedTile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position))
         this.overlay.forEach(image => image.destroy())
 
-        if (!this.potentialTargets.find(potentialTarget => potentialTarget === targettedTile)) {
-            if (this.scene.battleMap.getPlayersUnits(this.activePlayer).reduce((canPlay, unit) => !unit.hasMoved || canPlay), false) {
-                this.scene.state = new SelectState(new SwitchTurnState(this, this.scene), this.scene)
-            } else {
-                this.scene.state = new SelectState(this, this.scene)
+        if (this.potentialTargets.find(potentialTarget => potentialTarget === targettedTile)) {
+            let attacker = this.startPosition.getUnit();
+            let defender = targettedTile.getUnit();
+            attacker.attack(defender)
+            if (defender !== null) {
+                defender.attack(attacker)
             }
+        }
+
+        if (this.scene.battleMap.getPlayersUnits(this.activePlayer).reduce((canPlay, unit) => !unit.hasMoved || canPlay), false) {
+            this.scene.state = new SelectState(new SwitchTurnState(this, this.scene), this.scene)
+        } else {
+            this.scene.state = new SelectState(this, this.scene)
         }
     }
 

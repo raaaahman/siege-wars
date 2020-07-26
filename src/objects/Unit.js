@@ -44,8 +44,16 @@ class Unit {
         this.sprite.clearTint()
     }
 
-    computeDamage(unit) {
+    computeDamageRate(unit) {
         return this.damage[unit.name] * this.hp / 10
+    }
+
+    attack(target) {
+        target.hp -= Math.round( 10 * this.computeDamageRate(target) / 100)
+        if (target.hp <= 0) {
+            target.sprite.destroy()
+            target = null
+        }
     }
 }
 
