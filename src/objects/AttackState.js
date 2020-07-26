@@ -14,6 +14,26 @@ class AttackState extends GameState {
         this.overlay = this.scene.battleMap.displayOverlay(this.potentialTargets, {tint: 0xff0000})
     }
 
+    pointerMove(position) {
+        let targettedTile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position))
+        this.cursor.setPosition(
+            targettedTile.x * this.scene.battleMap.tileWidth,
+            targettedTile.y * this.scene.battleMap.tileHeight,
+        )
+
+        if (this.potentialTargets.find(potentialTarget => potentialTarget === targettedTile)) {
+            this.cursor.setFrame(173)
+            this.scene.infoText.unitName.setText(targettedTile.getUnit().name)
+            this.scene.infoText.unitPlayer.setText(targettedTile.getUnit().player.color)
+            this.scene.infoText.unitDamage.setText('Dmg: ' + this.startPosition.getUnit().computeDamage(targettedTile.getUnit()) + ' %')
+        } else {
+            this.cursor.setFrame(207)
+            this.scene.infoText.unitName.setText('')
+            this.scene.infoText.unitPlayer.setText('')
+            this.scene.infoText.unitDamage.setText('')
+        }
+    }
+
     pointerDown(position) {
         let targettedTile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position))
         this.overlay.forEach(image => image.destroy())

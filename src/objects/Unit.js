@@ -29,17 +29,23 @@ class UnitFactory {
 
 class Unit {
     constructor(player, position, stats, sprite) {
-        this.player = player
+        this.player   = player
         this.position = new Phaser.Math.Vector2(position.x, position.y)
-        this.name = stats.name
-        this.move = stats.move
-        this.sprite = sprite
+        this.name     = stats.name
+        this.hp       = 10
+        this.move     = stats.move
+        this.damage   = stats.damage
+        this.sprite   = sprite
         this.hasMoved = false
     }
 
     reset() {
         this.hasMoved = false
         this.sprite.clearTint()
+    }
+
+    computeDamage(unit) {
+        return this.damage[unit.name] * this.hp / 10
     }
 }
 

@@ -65,14 +65,14 @@ class GameScene extends Phaser.Scene {
 
         this.infoText = {
             unitName: this.add.text(180, 4, '', {font: '10px monospace'}),
-            unitPlayer: this.add.text(180, 16, '', {font: '10px monospace'})
+            unitPlayer: this.add.text(180, 16, '', {font: '10px monospace'}),
+            unitDamage: this.add.text( 180, 28, '', {font: '10px monospace'})
         }
         let cursor = this.add.image(
             this.input.activePointer.position.x - (this.input.activePointer.position.x % this.tileWidth),
             this.input.activePointer.position.y - (this.input.activePointer.position.y % this.tileHeight),
             'tileset'
-        )
-        cursor.setOrigin(0)
+        ).setOrigin(0).setDepth(99)
         this.state = new SelectState({activePlayer: this.players[0], cursor: cursor}, this)
 
         this.input.on('pointermove', () => {
