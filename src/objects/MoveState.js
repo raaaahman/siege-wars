@@ -38,7 +38,9 @@ class MoveState extends GameState {
             if (!hoveredUnit && undefined !== this.reachableTiles.find(reachableTile => reachableTile === targettedTile)) {
                 this.startPosition.setUnit(null)
                 targettedTile.setUnit(this.selectedUnit)
-                this.selectedUnit.sprite.setPosition(targettedTile.x * this.scene.battleMap.tileWidth, targettedTile.y * this.scene.battleMap.tileHeight, 11)
+                this.selectedUnit.hasMoved = true
+                this.selectedUnit.sprite.setPosition(targettedTile.x * this.scene.battleMap.tileWidth, targettedTile.y * this.scene.battleMap.tileHeight)
+                this.selectedUnit.sprite.tint = 0xabacab
                 this.scene.state = new SelectState(this, this.scene)
             } else {
                 this.scene.state = new SelectState(this, this.scene)

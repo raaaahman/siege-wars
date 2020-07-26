@@ -33,6 +33,7 @@ class Unit {
         this.name = stats.name
         this.move = stats.move
         this.sprite = sprite
+        this.hasMoved = false
     }
 }
 

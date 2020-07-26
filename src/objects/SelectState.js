@@ -35,7 +35,7 @@ class SelectState extends GameState {
             let tile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position))
             let hoveredUnit = tile.getUnit()
 
-            if (hoveredUnit && hoveredUnit.player === this.activePlayer) {
+            if (hoveredUnit && hoveredUnit.player === this.activePlayer && false === hoveredUnit.hasMoved) {
                 this.scene.state = new MoveState(Object.assign(this, {startPosition: tile, selectedUnit: hoveredUnit}), this.scene)
             } else {
                 this.scene.state = new MenuState(this, this.scene)
