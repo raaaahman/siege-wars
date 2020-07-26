@@ -15,21 +15,14 @@ class SelectState extends GameState {
             let tile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position));
             let hoveredUnit = tile.getUnit();
 
-            /*
-            let guiDimensions = {
-                x: 176,
-                y: 0,
-                width: 48,
-                height: 160
-            }
-            */
-
             if (hoveredUnit) {
                 this.scene.infoText.unitName.setText(hoveredUnit.name)
                 this.scene.infoText.unitPlayer.setText(hoveredUnit.player.color)
+                this.scene.infoText.unitHp.setText('Hp: ' + hoveredUnit.hp)
             } else {
                 this.scene.infoText.unitName.setText('')
                 this.scene.infoText.unitPlayer.setText('')
+                this.scene.infoText.unitHp.setText('')
             }
 
             this.cursor.setPosition(tile.x * this.scene.tileWidth, tile.y * this.scene.tileHeight)
