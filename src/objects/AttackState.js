@@ -44,15 +44,20 @@ class AttackState extends GameState {
             let attacker = this.startPosition.getUnit();
             let defender = targettedTile.getUnit();
             attacker.attack(defender)
-            if (defender !== null) {
+            if (defender.hp <= 0) {
+                targettedTile.setUnit(null)
+            } else {
                 defender.attack(attacker)
+                if (attacker.hp <= 0) {
+                    this.startPosition.setUnit(null)
+                }
             }
         }
 
-        if (this.scene.battleMap.getPlayersUnits(this.activePlayer).reduce((canPlay, unit) => !unit.hasMoved || canPlay), false) {
-            this.scene.state = new SelectState(new SwitchTurnState(this, this.scene), this.scene)
-        } else {
+        if (this.scene.battleMap.getPlayersUnits(this.activePlayer).reduce((canPlay, unit) => !unit.hasMoved || canPlay, false)) {
             this.scene.state = new SelectState(this, this.scene)
+        } else {
+            this.scene.state = new SelectState(new SwitchTurnState(this, this.scene), this.scene)
         }
     }
 
