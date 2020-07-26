@@ -8,6 +8,9 @@ class MoveState extends GameState {
         super(previousState, scene)
         this.selectedUnit = previousState.selectedUnit
         this.startPosition = previousState.startPosition
+        this.selectionHalo = this.cursor
+
+        this.cursor = this.scene.add.image(this.cursor.x, this.cursor.y, 'tileset', 204).setOrigin(0).setDepth(99)
 
         this.reachableTiles = [this.startPosition]
         for (let i = 0; i < this.selectedUnit.move; i++) {
@@ -21,10 +24,22 @@ class MoveState extends GameState {
         this.overlay = this.scene.battleMap.displayOverlay(this.reachableTiles, {tint: 0x10aded})
     }
 
+    pointerMove(position) {
+        let hoveredTile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position))
+        this.cursor.setPosition(hoveredTile.x * this.scene.battleMap.tileWidth, hoveredTile.y * this.scene.battleMap.tileHeight)
+
+        if (undefined !== this.reachableTiles.find(reachableTile => reachableTile === hoveredTile)) {
+            this.cursor.setFrame(204)
+        } else {
+            this.cursor.setFrame(207)
+        }
+    }
+
     pointerDown(position) {
         if (!this.scene.battleMap.isOutOfBounds(position)) {
             this.overlay.map(image => image.destroy(this.scene))
             let targettedTile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position))
+            this.selectionHalo.destroy()
 
             if (undefined !== this.reachableTiles.find(reachableTile => reachableTile === targettedTile)) {
                 this.startPosition.setUnit(null)
