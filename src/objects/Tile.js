@@ -1,3 +1,5 @@
+import {Unit} from "./Unit";
+
 class Tile {
     constructor(position, image) {
         this.position = position
@@ -20,6 +22,10 @@ class Tile {
 
     getUnit() {
         return this.unit
+    }
+
+    hasUnit() {
+        return this.unit instanceof Unit
     }
 
 }

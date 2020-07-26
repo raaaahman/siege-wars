@@ -5,16 +5,18 @@ class MoveState extends GameState {
     constructor(previousState, scene) {
         super(previousState, scene)
         this.selectedUnit = previousState.selectedUnit
+        this.startPosition = previousState.startPosition
 
-        let reachableTiles = [this.scene.battleMap.getTileAt(this.selectedUnit.position)]
+        this.reachableTiles = [this.startPosition]
         for (let i = 0; i < this.selectedUnit.move; i++) {
-            reachableTiles.forEach((tile) => {
+            this.reachableTiles.forEach((tile) => {
                 let neighbors = this.scene.battleMap.getNeighboringTiles(tile);
-                let newPaths = neighbors.filter(neighborTile => ! reachableTiles.find((storedTile) => storedTile === neighborTile))
-                reachableTiles.push(...newPaths)
+                let newPaths = neighbors.filter(neighborTile => !this.reachableTiles.find((storedTile) => storedTile === neighborTile)).filter(tile => !tile.hasUnit() || tile.getUnit().player === this.selectedUnit.player )
+                this.reachableTiles.push(...newPaths)
             })
         }
-        this.overlay = reachableTiles.map((tile) => {
+        this.reachableTiles = this.reachableTiles.filter(tile => !tile.hasUnit())
+        this.overlay = this.reachableTiles.map(tile => {
             let overlayTile = this.scene.add.image(
                 tile.position.x * this.scene.battleMap.tileWidth,
                 tile.position.y * this.scene.battleMap.tileHeight,
@@ -29,11 +31,16 @@ class MoveState extends GameState {
 
     pointerDown(position) {
         if (!this.scene.battleMap.isOutOfBounds(position)) {
-            let tile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position))
-            let hoveredUnit = tile.getUnit()
+            this.overlay.map(image => image.destroy(this.scene))
+            let targettedTile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position))
+            let hoveredUnit = targettedTile.getUnit()
 
-            if (hoveredUnit === this.selectedUnit) {
-                this.overlay.map(image => image.destroy(this.scene))
+            if (!hoveredUnit && false !== this.reachableTiles.find(reachableTile => reachableTile === targettedTile)) {
+                this.startPosition.setUnit(null)
+                targettedTile.setUnit(this.selectedUnit)
+                this.selectedUnit.sprite.setPosition(targettedTile.x * this.scene.battleMap.tileWidth, targettedTile.y * this.scene.battleMap.tileHeight, 11)
+                this.scene.state = new SelectState(this, this.scene)
+            } else {
                 this.scene.state = new SelectState(this, this.scene)
             }
 
