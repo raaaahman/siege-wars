@@ -16,7 +16,7 @@ class MoveState extends GameState {
                 this.reachableTiles.push(...newPaths)
             })
         }
-        this.reachableTiles = this.reachableTiles.filter(tile => !tile.hasUnit())
+        this.reachableTiles = this.reachableTiles.filter(tile => !tile.hasUnit() || tile.getUnit() === this.selectedUnit)
         this.overlay = this.reachableTiles.map(tile => {
             let overlayTile = this.scene.add.image(
                 tile.position.x * this.scene.battleMap.tileWidth,
@@ -24,6 +24,7 @@ class MoveState extends GameState {
                 'tileset',
                 0
             ).setOrigin(0)
+            overlayTile.setDepth(10)
             overlayTile.tint = 0x10aded
             overlayTile.setAlpha(0.5)
             return overlayTile
@@ -34,9 +35,8 @@ class MoveState extends GameState {
         if (!this.scene.battleMap.isOutOfBounds(position)) {
             this.overlay.map(image => image.destroy(this.scene))
             let targettedTile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position))
-            let hoveredUnit = targettedTile.getUnit()
 
-            if (!hoveredUnit && undefined !== this.reachableTiles.find(reachableTile => reachableTile === targettedTile)) {
+            if (undefined !== this.reachableTiles.find(reachableTile => reachableTile === targettedTile)) {
                 this.startPosition.setUnit(null)
                 targettedTile.setUnit(this.selectedUnit)
                 this.selectedUnit.hasMoved = true

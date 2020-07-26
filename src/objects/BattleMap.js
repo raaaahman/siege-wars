@@ -23,7 +23,12 @@ class BattleMap {
         })
         for (let num = 0; num < players.length; num++) {
             let units = new UnitFactory(unitTable, this.scene).forPlayer(players[num]).fromCSV(layers.units[num])
-            units.forEach((unit) => this.placeUnit(unit))
+            units.forEach(unit => {
+                if (num % 2 !== 0) {
+                    unit.sprite.setFlipX(true)
+                }
+                this.placeUnit(unit)
+            })
         }
     }
 

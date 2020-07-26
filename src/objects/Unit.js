@@ -21,6 +21,7 @@ class UnitFactory {
             let unitStats    = this.unitTable[unitType];
             let unitSprite   = this.scene.add.sprite(position.x * this.scene.tileWidth, position.y * this.scene.tileHeight, 'tileset', unitStats.img[this.player.color])
             unitSprite.setOrigin(0)
+            unitSprite.setDepth(20)
             return new Unit(this.player, position, unitStats, unitSprite)
         }
     }
