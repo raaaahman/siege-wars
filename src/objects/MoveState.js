@@ -11,7 +11,7 @@ class MoveState extends GameState {
         for (let i = 0; i < this.selectedUnit.move; i++) {
             this.reachableTiles.forEach((tile) => {
                 let neighbors = this.scene.battleMap.getNeighboringTiles(tile);
-                let newPaths = neighbors.filter(neighborTile => !this.reachableTiles.find((storedTile) => storedTile === neighborTile)).filter(tile => !tile.hasUnit() || tile.getUnit().player === this.selectedUnit.player )
+                let newPaths = neighbors.filter(neighborTile => !this.reachableTiles.find((storedTile) => storedTile === neighborTile)).filter(tile => !tile.hasUnit() || tile.getUnit().player === this.selectedUnit.player)
                 this.reachableTiles.push(...newPaths)
             })
         }
@@ -35,7 +35,7 @@ class MoveState extends GameState {
             let targettedTile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position))
             let hoveredUnit = targettedTile.getUnit()
 
-            if (!hoveredUnit && false !== this.reachableTiles.find(reachableTile => reachableTile === targettedTile)) {
+            if (!hoveredUnit && undefined !== this.reachableTiles.find(reachableTile => reachableTile === targettedTile)) {
                 this.startPosition.setUnit(null)
                 targettedTile.setUnit(this.selectedUnit)
                 this.selectedUnit.sprite.setPosition(targettedTile.x * this.scene.battleMap.tileWidth, targettedTile.y * this.scene.battleMap.tileHeight, 11)
