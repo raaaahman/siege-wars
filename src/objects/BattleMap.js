@@ -74,6 +74,22 @@ class BattleMap {
         })
         return units
     }
+
+    displayOverlay(tiles, args) {
+        return tiles.map(tile => {
+            let overlayTile = this.scene.add.image(
+                tile.position.x * this.tileWidth,
+                tile.position.y * this.tileHeight,
+                'tileset',
+                0
+            )
+                .setOrigin(0)
+                .setDepth(10)
+                .setAlpha(0.5)
+            overlayTile.tint = args.tint
+            return overlayTile
+        });
+    }
 }
 
 export default BattleMap

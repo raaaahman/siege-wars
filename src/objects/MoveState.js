@@ -1,6 +1,7 @@
 import GameState from "./GameState"
 import SelectState from "./SelectState"
 import SwitchTurnState from "./SwitchTurnState"
+import AttackState from "./AttackState";
 
 class MoveState extends GameState {
     constructor(previousState, scene) {
@@ -17,18 +18,7 @@ class MoveState extends GameState {
             })
         }
         this.reachableTiles = this.reachableTiles.filter(tile => !tile.hasUnit() || tile.getUnit() === this.selectedUnit)
-        this.overlay = this.reachableTiles.map(tile => {
-            let overlayTile = this.scene.add.image(
-                tile.position.x * this.scene.battleMap.tileWidth,
-                tile.position.y * this.scene.battleMap.tileHeight,
-                'tileset',
-                0
-            ).setOrigin(0)
-            overlayTile.setDepth(10)
-            overlayTile.tint = 0x10aded
-            overlayTile.setAlpha(0.5)
-            return overlayTile
-        })
+        this.overlay = this.scene.battleMap.displayOverlay(this.reachableTiles, {tint: 0x10aded})
     }
 
     pointerDown(position) {
@@ -42,7 +32,8 @@ class MoveState extends GameState {
                 this.selectedUnit.hasMoved = true
                 this.selectedUnit.sprite.setPosition(targettedTile.x * this.scene.battleMap.tileWidth, targettedTile.y * this.scene.battleMap.tileHeight)
                 this.selectedUnit.sprite.tint = 0xabacab
-                if (this.scene.battleMap.getPlayersUnits(this.activePlayer).reduce(
+
+               if (this.scene.battleMap.getPlayersUnits(this.activePlayer).reduce(
                     (canPlay, unit) => !unit.hasMoved || canPlay,
                     false)
                 ) {
