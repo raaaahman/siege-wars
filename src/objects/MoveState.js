@@ -1,5 +1,6 @@
 import GameState from "./GameState"
 import SelectState from "./SelectState"
+import SwitchTurnState from "./SwitchTurnState"
 
 class MoveState extends GameState {
     constructor(previousState, scene) {
@@ -41,7 +42,14 @@ class MoveState extends GameState {
                 this.selectedUnit.hasMoved = true
                 this.selectedUnit.sprite.setPosition(targettedTile.x * this.scene.battleMap.tileWidth, targettedTile.y * this.scene.battleMap.tileHeight)
                 this.selectedUnit.sprite.tint = 0xabacab
-                this.scene.state = new SelectState(this, this.scene)
+                if (this.scene.battleMap.getPlayersUnits(this.activePlayer).reduce(
+                    (canPlay, unit) => !unit.hasMoved || canPlay,
+                    false)
+                ) {
+                    this.scene.state = new SelectState(this, this.scene)
+                } else {
+                    this.scene.state = new SelectState(new SwitchTurnState(this, this.scene), this.scene)
+                }
             } else {
                 this.scene.state = new SelectState(this, this.scene)
             }

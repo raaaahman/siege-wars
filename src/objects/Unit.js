@@ -35,6 +35,11 @@ class Unit {
         this.sprite = sprite
         this.hasMoved = false
     }
+
+    reset() {
+        this.hasMoved = false
+        this.sprite.clearTint()
+    }
 }
 
 export {Unit, UnitFactory}

@@ -59,6 +59,16 @@ class BattleMap {
     placeUnit(unit) {
         this.terrain[unit.position.y * this.gridWidth + unit.position.x].setUnit(unit)
     }
+
+    getPlayersUnits(player) {
+        let units = []
+        this.terrain.forEach(tile => {
+            if (tile.hasUnit() && tile.getUnit().player === player) {
+                units.push(tile.getUnit())
+            }
+        })
+        return units
+    }
 }
 
 export default BattleMap

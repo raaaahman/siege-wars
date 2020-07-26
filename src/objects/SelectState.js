@@ -3,6 +3,13 @@ import MoveState from "../objects/MoveState"
 import MenuState from "../objects/MenuState"
 
 class SelectState extends GameState {
+
+    constructor(previousState, scene) {
+        super(previousState, scene);
+
+        const cursorImages = { red: 297, blue: 298, green: 299, yellow: 300};
+        this.cursor.setFrame(cursorImages[this.activePlayer.color])
+    }
     pointerMove(position) {
         if (!this.scene.battleMap.isOutOfBounds(position)) {
             let tile = this.scene.battleMap.getTileAt(this.scene.battleMap.computeCoordinates(position));
@@ -25,7 +32,7 @@ class SelectState extends GameState {
                 this.scene.infoText.unitPlayer.setText('')
             }
 
-            this.scene.cursor.setPosition(tile.x * this.scene.tileWidth, tile.y * this.scene.tileHeight)
+            this.cursor.setPosition(tile.x * this.scene.tileWidth, tile.y * this.scene.tileHeight)
 
         }
     }
