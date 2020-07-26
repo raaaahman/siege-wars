@@ -52,7 +52,6 @@ class Unit {
         target.hp -= Math.round( 10 * this.computeDamageRate(target) / 100)
         if (target.hp <= 0) {
             target.sprite.destroy()
-            target = null
         }
     }
 }
