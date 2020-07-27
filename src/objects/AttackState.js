@@ -60,7 +60,7 @@ class AttackState extends GameState {
         } else if (this.scene.battleMap.getPlayersUnits(this.activePlayer).reduce((canPlay, unit) => !unit.hasMoved || canPlay, false)) {
             this.scene.state = new SelectState(this, this.scene)
         } else {
-            this.scene.state = new SelectState(new SwitchTurnState(this, this.scene), this.scene)
+            this.scene.state = new SwitchTurnState(this, this.scene)
         }
     }
 

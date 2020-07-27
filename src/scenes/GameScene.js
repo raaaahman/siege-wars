@@ -3,6 +3,7 @@ import tilesetImg from "../assets/Tile-set - Toen's Medieval Strategy (16x16) - 
 import shadedGrid from "../assets/shaded-grid-light.png"
 import BattleMap from "../objects/BattleMap"
 import SelectState from "../objects/SelectState"
+import SwitchTurnState from "../objects/SwitchTurnState";
 
 class GameScene extends Phaser.Scene {
     constructor() {
@@ -74,7 +75,7 @@ class GameScene extends Phaser.Scene {
             this.input.activePointer.position.y - (this.input.activePointer.position.y % this.tileHeight),
             'tileset'
         ).setOrigin(0).setDepth(99)
-        this.state = new SelectState({activePlayer: this.players[0], cursor: cursor}, this)
+        this.state = new SwitchTurnState({activePlayer: this.players[-1], cursor: cursor}, this)
 
         this.input.on('pointermove', () => {
             this.state.pointerMove(this.input.activePointer.position)
