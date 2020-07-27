@@ -1,6 +1,7 @@
 import GameState from "./GameState"
 import SelectState from "./SelectState"
-import SwitchTurnState from "./SwitchTurnState";
+import SwitchTurnState from "./SwitchTurnState"
+import GameOverState from "./GameOverState"
 
 class AttackState extends GameState {
     constructor(previousState, scene) {
@@ -54,9 +55,8 @@ class AttackState extends GameState {
             }
         }
 
-        if (this.scene.players.reduce((gameOver, player) => this.scene.battleMap.getPlayersUnits(player).length === 0 || gameOver, false)) {
-            this.scene.game.scene.stop('GameScene')
-            this.scene.game.scene.start('TitleScreen')
+        if (this.scene.players.filter((player) => this.scene.battleMap.getPlayersUnits(player).length > 0).length <= 1) {
+            this.scene.state = new GameOverState(this, this.scene)
         } else if (this.scene.battleMap.getPlayersUnits(this.activePlayer).reduce((canPlay, unit) => !unit.hasMoved || canPlay, false)) {
             this.scene.state = new SelectState(this, this.scene)
         } else {

@@ -14,8 +14,8 @@ class SwitchTurnState extends GameState {
         }
         this.headliner = this.scene.add.group([
             this.scene.add.rectangle(0, 60, 240, 40, headlinerColors[this.activePlayer.color]).setOrigin(0),
-            this.scene.add.text(80, 74, this.activePlayer.color.toUpperCase() + ' Player', {font: '14px monospace'}).setDepth(100),
-            this.scene.add.text(80, 104, 'Click to Play', {font: '10px monospace'}).setDepth(100)
+            this.scene.add.text(80, 74, this.activePlayer.color.toUpperCase() + ' Player', {font: '14px monospace'}),
+            this.scene.add.text(80, 104, 'Click to Play', {font: '10px monospace'})
         ]).setDepth(99)
         this.cursor.setVisible(false)
     }
