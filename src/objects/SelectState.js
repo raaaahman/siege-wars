@@ -16,10 +16,12 @@ class SelectState extends GameState {
             let hoveredUnit = tile.getUnit();
 
             if (hoveredUnit) {
+                this.scene.infoPanel.setVisible(true)
                 this.scene.infoText.unitName.setText(hoveredUnit.name)
                 this.scene.infoText.unitPlayer.setText(hoveredUnit.player.color)
                 this.scene.infoText.unitHp.setText('Hp: ' + hoveredUnit.hp)
             } else {
+                this.scene.infoPanel.setVisible(false)
                 this.scene.infoText.unitName.setText('')
                 this.scene.infoText.unitPlayer.setText('')
                 this.scene.infoText.unitHp.setText('')

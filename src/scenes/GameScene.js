@@ -1,9 +1,9 @@
 import Phaser from "phaser"
 import tilesetImg from "../assets/Tile-set - Toen's Medieval Strategy (16x16) - v.1.0.png"
 import shadedGrid from "../assets/shaded-grid-light.png"
+import infoPanelImg from "../assets/info-panel.png"
 import BattleMap from "../objects/BattleMap"
-import SelectState from "../objects/SelectState"
-import SwitchTurnState from "../objects/SwitchTurnState";
+import SwitchTurnState from "../objects/SwitchTurnState"
 
 class GameScene extends Phaser.Scene {
     constructor() {
@@ -16,6 +16,7 @@ class GameScene extends Phaser.Scene {
     preload() {
         this.load.spritesheet('tileset', tilesetImg, {frameWidth: this.tileWidth, frameHeight: this.tileHeight})
         this.load.spritesheet('shadedGrid', shadedGrid, {frameWidth: this.tileWidth, frameHeight: this.tileHeight})
+        this.load.image('infoPanel', infoPanelImg)
     }
 
     create() {
@@ -64,11 +65,12 @@ class GameScene extends Phaser.Scene {
 
         this.battleMap.load(layers, this.players)
 
+        this.infoPanel = this.add.image(178, 2, 'infoPanel').setOrigin(0).setVisible(false)
         this.infoText = {
-            unitName  : this.add.text(180, 4, '', {font: '10px monospace'}),
-            unitPlayer: this.add.text(180, 16, '', {font: '10px monospace'}),
-            unitHp    : this.add.text(180, 28, '', {font: '10px monospace'}),
-            unitDamage: this.add.text(180, 40, '', {font: '10px monospace'})
+            unitName  : this.add.text(183, 6, '', {font: '10px monospace'}),
+            unitPlayer: this.add.text(183, 18, '', {font: '10px monospace'}),
+            unitHp    : this.add.text(183, 30, '', {font: '10px monospace'}),
+            unitDamage: this.add.text(183, 42, '', {font: '10px monospace'})
         }
         let cursor = this.add.image(
             this.input.activePointer.position.x - (this.input.activePointer.position.x % this.tileWidth),

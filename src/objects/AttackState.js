@@ -24,12 +24,14 @@ class AttackState extends GameState {
 
         if (this.potentialTargets.find(potentialTarget => potentialTarget === targettedTile)) {
             this.cursor.setFrame(173)
+            this.scene.infoPanel.setVisible(true)
             this.scene.infoText.unitName.setText(targettedTile.getUnit().name)
             this.scene.infoText.unitPlayer.setText(targettedTile.getUnit().player.color)
             this.scene.infoText.unitHp.setText('Hp: ' + targettedTile.getUnit().hp)
-            this.scene.infoText.unitDamage.setText('Dmg: ' + this.startPosition.getUnit().computeDamageRate(targettedTile.getUnit()) + ' %')
+            this.scene.infoText.unitDamage.setText('Dmg: ' + this.startPosition.getUnit().computeDamageRate(targettedTile.getUnit()) + '%')
         } else {
             this.cursor.setFrame(207)
+            this.scene.infoPanel.setVisible(false)
             this.scene.infoText.unitName.setText('')
             this.scene.infoText.unitPlayer.setText('')
             this.scene.infoText.unitHp.setText('')

@@ -10,13 +10,13 @@
     "move" : 5,
     "damage" : {
       "Knight"    : 50,
-      "Swordsman" : 35,
+      "Swdman" : 35,
       "Spearman"  : 25,
       "Archer"    : 75
     }
   },
   "SWD" : {
-    "name" : "Swordsman",
+    "name" : "Swdman",
     "img"  : {
       "blue"   : 114,
       "red"    : 121,
@@ -26,7 +26,7 @@
     "move" : 2,
     "damage" : {
       "Knight"    : 35,
-      "Swordsman" : 50,
+      "Swdman" : 50,
       "Spearman"  : 70,
       "Archer"    : 75
     }
@@ -42,7 +42,7 @@
     "move" : 3,
     "damage" : {
       "Knight"    : 70,
-      "Swordsman" : 20,
+      "Swdman" : 20,
       "Spearman"  : 50,
       "Archer"    : 50
     }
@@ -58,7 +58,7 @@
     "move" : 3,
     "damage" : {
       "Knight"    : 20,
-      "Swordsman" : 15,
+      "Swdman" : 15,
       "Spearman"  : 75,
       "Archer"    : 65
     }
