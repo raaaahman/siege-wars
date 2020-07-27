@@ -29,6 +29,20 @@ class AttackState extends GameState {
             this.scene.infoText.unitPlayer.setText(targettedTile.getUnit().player.color)
             this.scene.infoText.unitHp.setText('Hp: ' + targettedTile.getUnit().hp)
             this.scene.infoText.unitDamage.setText('Dmg: ' + this.startPosition.getUnit().computeDamageRate(targettedTile.getUnit()) + '%')
+
+            if (position.y < this.scene.game.config.height / 2 && position.x > 176) {
+                this.scene.infoPanel.setY(this.scene.game.config.height / 2 + 2)
+                this.scene.infoText.unitName.setY(this.scene.game.config.height / 2 + 6)
+                this.scene.infoText.unitPlayer.setY(this.scene.game.config.height / 2 + 18)
+                this.scene.infoText.unitHp.setY( this.scene.game.config.height / 2 + 30)
+                this.scene.infoText.unitDamage.setY( this.scene.game.config.height / 2 + 42)
+            } else {
+                this.scene.infoPanel.setY(2)
+                this.scene.infoText.unitName.setY(6)
+                this.scene.infoText.unitPlayer.setY(18)
+                this.scene.infoText.unitHp.setY(30)
+                this.scene.infoText.unitDamage.setY(42)
+            }
         } else {
             this.cursor.setFrame(207)
             this.scene.infoPanel.setVisible(false)

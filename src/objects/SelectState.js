@@ -20,6 +20,20 @@ class SelectState extends GameState {
                 this.scene.infoText.unitName.setText(hoveredUnit.name)
                 this.scene.infoText.unitPlayer.setText(hoveredUnit.player.color)
                 this.scene.infoText.unitHp.setText('Hp: ' + hoveredUnit.hp)
+
+                if (position.y < this.scene.game.config.height / 2 && position.x > 176) {
+                    this.scene.infoPanel.setY(this.scene.game.config.height / 2 + 2)
+                    this.scene.infoText.unitName.setY(this.scene.game.config.height / 2 + 6)
+                    this.scene.infoText.unitPlayer.setY(this.scene.game.config.height / 2 + 18)
+                    this.scene.infoText.unitHp.setY( this.scene.game.config.height / 2 + 30)
+                    this.scene.infoText.unitDamage.setY( this.scene.game.config.height / 2 + 42)
+                } else {
+                    this.scene.infoPanel.setY(2)
+                    this.scene.infoText.unitName.setY(6)
+                    this.scene.infoText.unitPlayer.setY(18)
+                    this.scene.infoText.unitHp.setY(30)
+                    this.scene.infoText.unitDamage.setY(42)
+                }
             } else {
                 this.scene.infoPanel.setVisible(false)
                 this.scene.infoText.unitName.setText('')

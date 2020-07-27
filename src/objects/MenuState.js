@@ -12,7 +12,7 @@ class MenuState extends GameState {
             this.scene.add.text(188, 102, 'End Turn', {font: '8px monospace'}),
             this.scene.add.image(180, 116, 'buttonLarge',0).setOrigin(0),
             this.scene.add.text(200, 120, 'Quit', {font: '8px monospace'})
-        ])
+        ]).setDepth(99)
     }
 
     pointerDown(position) {
