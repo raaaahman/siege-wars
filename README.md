@@ -2,6 +2,8 @@
 
 Turn based tactical game played in a browser. Each player is a medieval lord that strive for domination by eliminating its opponents. Made in the context of the [Gamecodeur Jam #26](https://itch.io/jam/gamecodeur-gamejam-26) on the theme **Advance Wars / Turn Base Tactics**.
 
+[Play on itch.io](https://raaaahman.itch.io/siege-wars)
+
 Made with [Phaser 3](https://www.phaser.io/phaser3).
 
 # Credits
